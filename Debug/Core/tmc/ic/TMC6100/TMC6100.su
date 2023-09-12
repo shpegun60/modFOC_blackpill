@@ -1,0 +1,3 @@
+../Core/tmc/ic/TMC6100/TMC6100.c:14:5:tmc6100_init	24	static
+../Core/tmc/ic/TMC6100/TMC6100.c:28:9:tmc6100_readInt	32	static
+../Core/tmc/ic/TMC6100/TMC6100.c:45:6:tmc6100_writeInt	40	static

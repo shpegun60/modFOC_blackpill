@@ -1,0 +1,6 @@
+../Core/tmc/helpers/CRC.c:86:9:tmc_fillCRC8Table	10
+../Core/tmc/helpers/CRC.c:148:9:tmc_CRC8	4
+../Core/tmc/helpers/CRC.c:164:9:tmc_tableGetPolynomial	2
+../Core/tmc/helpers/CRC.c:172:6:tmc_tableIsReflected	2
+../Core/tmc/helpers/CRC.c:181:16:flipByte	1
+../Core/tmc/helpers/CRC.c:201:17:flipBitsInBytes	1
