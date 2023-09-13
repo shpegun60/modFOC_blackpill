@@ -27,7 +27,9 @@
 /* USER CODE BEGIN Includes */
 #include "TMC4671.h"
 #include "tmc4671_template.h"
+#include "TMCL_receiver.h"
 #include "TMCL.h"
+#include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -78,6 +80,12 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
 		HAL_GPIO_WritePin(CTRL_EN_GPIO_Port, CS_CTRL_Pin, GPIO_PIN_SET);
 	}
 }
+
+int tmcl_transmitt(uint8_t* Buf, int Len)
+{
+	return CDC_Transmit_FS(Buf, Len);
+}
+
 /* USER CODE END 0 */
 
 /**

@@ -11,11 +11,18 @@
 #include "stdint.h"
 #include "TMCL-Defines.h"
 
-extern uint8_t TMCLReplyFormat;
-extern uint8_t SpecialReply[9];
-extern uint8_t TMCLSuppressReply;
+typedef struct
+{
+	uint8_t TMCLReplyFormat;
+	uint8_t SpecialReply[9];
+	uint8_t TMCLSuppressReply;
 
-extern TTMCLCommand ActualCommand;
-extern TTMCLReply ActualReply;
+	TTMCLCommand 	ActualCommand;
+	TTMCLReply 		ActualReply;
+
+	uint32_t commLoopCounter;
+} TMCL_handler_t;
+
+extern TMCL_handler_t TMCL_handle;
 
 #endif /* TMCL_VARIABLES_H */

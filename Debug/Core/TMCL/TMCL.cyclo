@@ -1,5 +1,2 @@
-../Core/TMCL/TMCL.c:8:9:getVM	1
-../Core/TMCL/TMCL.c:15:6:tmcl_getVersion	4
-../Core/TMCL/TMCL.c:35:6:tmcl_getInput	2
-../Core/TMCL/TMCL.c:48:6:tmcl_executeActualCommand	9
-../Core/TMCL/TMCL.c:76:6:tmcl_processCommand	15
+../Core/TMCL/TMCL.c:22:13:tmcl_executeActualCommand	11
+../Core/TMCL/TMCL.c:64:6:tmcl_processCommand	13

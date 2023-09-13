@@ -6,15 +6,21 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/TMCL/TMCL-Variables.c \
-../Core/TMCL/TMCL.c 
+../Core/TMCL/TMCL.c \
+../Core/TMCL/TMCL_cmds.c \
+../Core/TMCL/TMCL_receiver.c 
 
 C_DEPS += \
 ./Core/TMCL/TMCL-Variables.d \
-./Core/TMCL/TMCL.d 
+./Core/TMCL/TMCL.d \
+./Core/TMCL/TMCL_cmds.d \
+./Core/TMCL/TMCL_receiver.d 
 
 OBJS += \
 ./Core/TMCL/TMCL-Variables.o \
-./Core/TMCL/TMCL.o 
+./Core/TMCL/TMCL.o \
+./Core/TMCL/TMCL_cmds.o \
+./Core/TMCL/TMCL_receiver.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -24,7 +30,7 @@ Core/TMCL/%.o Core/TMCL/%.su Core/TMCL/%.cyclo: ../Core/TMCL/%.c Core/TMCL/subdi
 clean: clean-Core-2f-TMCL
 
 clean-Core-2f-TMCL:
-	-$(RM) ./Core/TMCL/TMCL-Variables.cyclo ./Core/TMCL/TMCL-Variables.d ./Core/TMCL/TMCL-Variables.o ./Core/TMCL/TMCL-Variables.su ./Core/TMCL/TMCL.cyclo ./Core/TMCL/TMCL.d ./Core/TMCL/TMCL.o ./Core/TMCL/TMCL.su
+	-$(RM) ./Core/TMCL/TMCL-Variables.cyclo ./Core/TMCL/TMCL-Variables.d ./Core/TMCL/TMCL-Variables.o ./Core/TMCL/TMCL-Variables.su ./Core/TMCL/TMCL.cyclo ./Core/TMCL/TMCL.d ./Core/TMCL/TMCL.o ./Core/TMCL/TMCL.su ./Core/TMCL/TMCL_cmds.cyclo ./Core/TMCL/TMCL_cmds.d ./Core/TMCL/TMCL_cmds.o ./Core/TMCL/TMCL_cmds.su ./Core/TMCL/TMCL_receiver.cyclo ./Core/TMCL/TMCL_receiver.d ./Core/TMCL/TMCL_receiver.o ./Core/TMCL/TMCL_receiver.su
 
 .PHONY: clean-Core-2f-TMCL
 

@@ -22,7 +22,7 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "TMCL_receiver.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -74,7 +74,7 @@
   */
 
 /* USER CODE BEGIN PRIVATE_MACRO */
-#define RX_CMND_BUF_LEN 30
+
 /* USER CODE END PRIVATE_MACRO */
 
 /**
@@ -94,13 +94,7 @@ uint8_t UserRxBufferFS[APP_RX_DATA_SIZE];
 uint8_t UserTxBufferFS[APP_TX_DATA_SIZE];
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
-struct
-{
-	int pos_receive, pos_process;
-	char IsCommandDataReceived;
-	uint8_t RxBufferFS[RX_CMND_BUF_LEN][APP_RX_DATA_SIZE];
-	uint8_t CMDLens[RX_CMND_BUF_LEN];
-} rx_cmd_buf;
+
 /* USER CODE END PRIVATE_VARIABLES */
 
 /**
@@ -134,7 +128,7 @@ static int8_t CDC_Receive_FS(uint8_t* pbuf, uint32_t *Len);
 static int8_t CDC_TransmitCplt_FS(uint8_t *pbuf, uint32_t *Len, uint8_t epnum);
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
-uint8_t USB_retrieveCMD(uint8_t *Buf, uint32_t *Len);
+
 /* USER CODE END PRIVATE_FUNCTIONS_DECLARATION */
 
 /**
@@ -267,23 +261,10 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
-//  USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
-//  USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-//  return (USBD_OK);
-
-	rx_cmd_buf.IsCommandDataReceived = 1;
-	rx_cmd_buf.CMDLens[rx_cmd_buf.pos_receive] = (*Len);
-	memcpy(rx_cmd_buf.RxBufferFS[rx_cmd_buf.pos_receive], Buf, (*Len));
-	rx_cmd_buf.pos_receive++;
-
-	if (rx_cmd_buf.pos_receive >= RX_CMND_BUF_LEN)
-	{
-		rx_cmd_buf.pos_receive = 0;
-	}
-
-	USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
-	USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-	return (USBD_OK);
+  tmcl_receive(Buf, (*Len));
+  USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
+  USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  return (USBD_OK);
   /* USER CODE END 6 */
 }
 
@@ -336,34 +317,7 @@ static int8_t CDC_TransmitCplt_FS(uint8_t *Buf, uint32_t *Len, uint8_t epnum)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
-uint8_t USB_retrieveCMD(uint8_t *Buf, uint32_t *Len)
-{
-	if (rx_cmd_buf.IsCommandDataReceived == 0)
-	{
-		return 0;
-	}
 
-	int index = rx_cmd_buf.pos_process;
-	*Len = rx_cmd_buf.CMDLens[index];
-
-	memcpy(Buf, rx_cmd_buf.RxBufferFS[index], (*Len));
-	//testing only. make sure there is ending char in the returned command string
-	//check if all data were processed.
-	rx_cmd_buf.pos_process++;
-	if (rx_cmd_buf.pos_process >= RX_CMND_BUF_LEN)
-	{
-		rx_cmd_buf.pos_process = 0;
-	}
-
-	if (rx_cmd_buf.pos_process == rx_cmd_buf.pos_receive)
-	{
-		rx_cmd_buf.IsCommandDataReceived = 0;
-	}
-
-	//check if all data were processed
-	return 1;
-
-}
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
 /**

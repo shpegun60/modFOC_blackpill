@@ -10,6 +10,8 @@
 "./Core/Startup/startup_stm32f411ceux.o"
 "./Core/TMCL/TMCL-Variables.o"
 "./Core/TMCL/TMCL.o"
+"./Core/TMCL/TMCL_cmds.o"
+"./Core/TMCL/TMCL_receiver.o"
 "./Core/tmc/helpers/CRC.o"
 "./Core/tmc/helpers/Functions.o"
 "./Core/tmc/ic/TMC4671/TMC4671.o"

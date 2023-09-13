@@ -8,7 +8,11 @@
 #ifndef TMCL_DEFINES_H
 #define TMCL_DEFINES_H
 
+//////////////////////////////////////////////////////
+#define MODULE_ADDRESS 1
+#define HOST_ADDRESS 2
 #define DEFAULT_MC 5
+/////////////////////////////////////////////////////
 
 #define TCS_IDLE  			0
 #define TCS_UART  			3
@@ -23,7 +27,7 @@
 #define TMCL_ROL 						2
 #define TMCL_MST 						3
 #define TMCL_SAP 						5
-#define TMCL_GAP 						6	//
+#define TMCL_GAP 						6	//GAP – Get Axis Parameter
 #define TMCL_STAP 						7
 #define TMCL_RSAP 						8
 #define TMCL_SGP 						9

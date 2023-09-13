@@ -1,5 +1,2 @@
-../Core/TMCL/TMCL.c:8:9:getVM	32	static
-../Core/TMCL/TMCL.c:15:6:tmcl_getVersion	16	static
-../Core/TMCL/TMCL.c:35:6:tmcl_getInput	8	static
-../Core/TMCL/TMCL.c:48:6:tmcl_executeActualCommand	8	static
-../Core/TMCL/TMCL.c:76:6:tmcl_processCommand	48	static
+../Core/TMCL/TMCL.c:22:13:tmcl_executeActualCommand	8	static
+../Core/TMCL/TMCL.c:64:6:tmcl_processCommand	48	static

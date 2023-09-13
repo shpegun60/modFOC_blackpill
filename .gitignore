@@ -43,3 +43,4 @@ Hardware/v1.0/modFOC-Panel/History
 *.out
 *.app
 *.LOG
+/Debug/
