@@ -1,4 +1,0 @@
-../Core/tmc/tmc4671_template.c:17:6:StartupConfig	8	static
-../Core/tmc/tmc4671_template.c:78:6:openloop_test_drive	16	static
-../Core/tmc/tmc4671_template.c:111:6:ABN_encoder_test_drive	16	static
-../Core/tmc/tmc4671_template.c:138:6:Exp_speed_ramp	8	static

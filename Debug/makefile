@@ -14,12 +14,12 @@ RM := rm -rf
 -include Middlewares/ST/STM32_USB_Device_Library/Core/Src/subdir.mk
 -include Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
--include Core/tmc/ramp/subdir.mk
--include Core/tmc/ic/TMC6100/subdir.mk
--include Core/tmc/ic/TMC4671/subdir.mk
--include Core/tmc/helpers/subdir.mk
--include Core/tmc/subdir.mk
--include Core/TMCL/subdir.mk
+-include Core/TMC_lib/tmcl/subdir.mk
+-include Core/TMC_lib/tmc/ramp/subdir.mk
+-include Core/TMC_lib/tmc/ic/TMC6100/subdir.mk
+-include Core/TMC_lib/tmc/ic/TMC4671/subdir.mk
+-include Core/TMC_lib/tmc/helpers/subdir.mk
+-include Core/TMC_lib/boards/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
@@ -59,34 +59,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := blackpill_test
+BUILD_ARTIFACT_NAME := blackpill_ESC
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-blackpill_test.elf \
+blackpill_ESC.elf \
 
 MAP_FILES += \
-blackpill_test.map \
+blackpill_ESC.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-blackpill_test.list \
+blackpill_ESC.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: blackpill_test.elf secondary-outputs
+main-build: blackpill_ESC.elf secondary-outputs
 
 # Tool invocations
-blackpill_test.elf blackpill_test.map: $(OBJS) $(USER_OBJS) C:\Users\admin\Documents\STM32\blackpill_test\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "blackpill_test.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\admin\Documents\STM32\blackpill_test\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="blackpill_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+blackpill_ESC.elf blackpill_ESC.map: $(OBJS) $(USER_OBJS) C:\Users\admin\Documents\STM32\blackpill_ESC\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "blackpill_ESC.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\admin\Documents\STM32\blackpill_ESC\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="blackpill_ESC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -95,14 +95,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-blackpill_test.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "blackpill_test.list"
+blackpill_ESC.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "blackpill_ESC.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) blackpill_test.elf blackpill_test.list blackpill_test.map default.size.stdout
+	-$(RM) blackpill_ESC.elf blackpill_ESC.list blackpill_ESC.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

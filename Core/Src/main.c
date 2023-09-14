@@ -26,9 +26,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "TMC4671.h"
-#include "tmc4671_template.h"
-#include "TMCL_receiver.h"
-#include "TMCL.h"
+#include "boards/Board.h"
+#include "tmcl/IdDetection.h"
+#include "tmcl/TMCL.h"
+#include "tmcl/BoardAssignment.h"
 #include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
@@ -85,6 +86,8 @@ int tmcl_transmitt(uint8_t* Buf, int Len)
 {
 	return CDC_Transmit_FS(Buf, Len);
 }
+#define MODULE_ID "0011"
+const char *VersionString = MODULE_ID"V307"; // module id and version of the firmware shown in the TMCL-IDE
 
 /* USER CODE END 0 */
 
@@ -134,14 +137,42 @@ int main(void)
   tx_data[4] = (value >>  0) & 0xFF;
   HAL_GPIO_WritePin(CTRL_EN_GPIO_Port, CS_CTRL_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(CS_DRV_GPIO_Port, CS_DRV_Pin, GPIO_PIN_SET);
-  StartupConfig();
-  openloop_test_drive(0x00);
+
+
+	//IDDetection_init();          // Initialize board detection
+	tmcl_init();                 // Initialize TMCL communication
+
+	tmcdriver_init();            // Initialize dummy driver board --> preset EvalBoards.ch2
+	tmcmotioncontroller_init();  // Initialize dummy motion controller board  --> preset EvalBoards.ch1
+
+	Evalboards.driverEnable = DRIVER_ENABLE;
+	Evalboards.ch1.id = 0;       // preset id for driver board to 0 --> error/not found
+	Evalboards.ch2.id = 0;       // preset id for driver board to 0 --> error/not found
+
+	IdAssignmentTypeDef ids;
+	ids.ch1.id = ID_TMC4671;
+	ids.ch1.state = ID_STATE_DONE;
+
+	ids.ch2.id = ID_TMC6100;
+	ids.ch2.state = ID_STATE_DONE;
+	tmcl_boot();
+
+	Board_assign(&ids);             // assign boards with detected id
 
   while (1)
   {
-//	  tmc4671_writeInt(0, TMC4671_CHIPINFO_ADDR, 0x00000000);
-//	  val = tmc4671_readInt(0, TMC4671_CHIPINFO_DATA);
-	  tmcl_processCommand();
+	  // Perodic jobs of Motion controller/Driver boards
+	Evalboards.ch1.periodicJob(uwTick);
+	Evalboards.ch2.periodicJob(uwTick);
+
+	// Process TMCL communication
+	tmcl_process();
+
+
+//	  tmc4671_writeInt(0, TMC4671_CHIPINFO_ADDR, 0x00000001);
+//	  val = tmc4671_readInt(0, TMC4671_CHIPINFO_ADDR);
+	  //val = tmc4671_readInt(0, TMC4671_CHIPINFO_DATA);
+	  //tmcl_processCommand();
 	  //tmc4671_writeInt(0, TMC4671_CHIPINFO_DATA, 0x00000000);
 
 

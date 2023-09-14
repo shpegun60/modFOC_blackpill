@@ -1,7 +1,0 @@
-../Core/tmc/ramp/Ramp.c:10:6:tmc_ramp_init	1
-../Core/tmc/ramp/Ramp.c:20:9:tmc_ramp_compute	2
-../Core/tmc/ramp/Ramp.c:38:9:tmc_ramp_get_rampVelocity	2
-../Core/tmc/ramp/Ramp.c:49:9:tmc_ramp_get_rampPosition	2
-../Core/tmc/ramp/Ramp.c:60:6:tmc_ramp_get_enabled	2
-../Core/tmc/ramp/Ramp.c:71:6:tmc_ramp_set_enabled	1
-../Core/tmc/ramp/Ramp.c:81:6:tmc_ramp_toggle_enabled	1

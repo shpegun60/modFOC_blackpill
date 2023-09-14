@@ -34,12 +34,12 @@ CPP_DEPS :=
 SUBDIRS := \
 Core/Src \
 Core/Startup \
-Core/TMCL \
-Core/tmc/helpers \
-Core/tmc/ic/TMC4671 \
-Core/tmc/ic/TMC6100 \
-Core/tmc/ramp \
-Core/tmc \
+Core/TMC_lib/boards \
+Core/TMC_lib/tmc/helpers \
+Core/TMC_lib/tmc/ic/TMC4671 \
+Core/TMC_lib/tmc/ic/TMC6100 \
+Core/TMC_lib/tmc/ramp \
+Core/TMC_lib/tmcl \
 Drivers/STM32F4xx_HAL_Driver/Src \
 Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src \
