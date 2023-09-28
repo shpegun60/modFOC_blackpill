@@ -315,7 +315,8 @@ static uint32_t handleParameter(uint8_t readWrite, uint8_t motor, uint8_t type, 
 			tmc4671_writeInt(motor, TMC4671_INTERIM_ADDR, 2);
 			*value = tmc4671_readInt(motor, TMC4671_INTERIM_DATA);
 		} else if(readWrite == WRITE) {
-			errors |= TMC_ERROR_TYPE;
+			//errors |= TMC_ERROR_TYPE;
+			tmc4671_setTargetVelocity(motor, *value);
 		}
 		break;
 	case 251:

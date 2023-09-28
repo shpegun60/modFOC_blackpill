@@ -31,6 +31,8 @@
 #include "tmcl/TMCL.h"
 #include "tmcl/BoardAssignment.h"
 #include "usbd_cdc_if.h"
+
+#include "ESC.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -158,6 +160,8 @@ int main(void)
 	tmcl_boot();
 
 	Board_assign(&ids);             // assign boards with detected id
+
+	StartupConfig();
 
   while (1)
   {
