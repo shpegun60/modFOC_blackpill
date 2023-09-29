@@ -1,9 +1,12 @@
-/*
- * Functions.c
- *
- *  Created on: 23.07.2018
- *      Author: ed
- */
+/*******************************************************************************
+* Copyright © 2018 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
+
+
 #include "Functions.h"
 
 int32_t tmc_limitInt(int32_t value, int32_t min, int32_t max)
@@ -56,7 +59,7 @@ int32_t tmc_sqrti(int32_t x)
 		return -1;
 
 	if (x < 0x0100)
-		return (int) sqrttable[x] >> 4;
+		return (int32_t) sqrttable[x] >> 4;
 
 	if (x >= 0x00010000)
 	{
@@ -67,12 +70,12 @@ int32_t tmc_sqrti(int32_t x)
 				if (x >= 0x40000000)
 				{
 					// 0x40000000 <= x < 0x7FFFFFFF
-					xn = (int) sqrttable[x >> 24] << 8;
+					xn = (int32_t) sqrttable[x >> 24] << 8;
 				}
 				else
 				{
 					// 0x10000000 <= x < 0x40000000
-					xn = (int) sqrttable[x >> 22] << 7;
+					xn = (int32_t) sqrttable[x >> 22] << 7;
 				}
 			}
 			else
@@ -80,12 +83,12 @@ int32_t tmc_sqrti(int32_t x)
 				if (x >= 0x04000000)
 				{
 					// 0x04000000 <= x < 0x10000000
-					xn = (int) sqrttable[x >> 20] << 6;
+					xn = (int32_t) sqrttable[x >> 20] << 6;
 				}
 				else
 				{
 					// 0x01000000 <= x < 0x04000000
-					xn = (int) sqrttable[x >> 18] << 5;
+					xn = (int32_t) sqrttable[x >> 18] << 5;
 				}
 			}
 
@@ -100,12 +103,12 @@ int32_t tmc_sqrti(int32_t x)
 				if (x >= 0x00400000)
 				{
 					// 0x00400000 <= x < 0x01000000
-					xn = (int) sqrttable[x >> 16] << 4;
+					xn = (int32_t) sqrttable[x >> 16] << 4;
 				}
 				else
 				{
 					// 0x00100000 <= x < 0x00400000
-					xn = (int) sqrttable[x >> 14] << 3;
+					xn = (int32_t) sqrttable[x >> 14] << 3;
 				}
 			}
 			else
@@ -113,12 +116,12 @@ int32_t tmc_sqrti(int32_t x)
 				if (x >= 0x00040000)
 				{
 					// 0x00040000 <= x < 0x00100000
-					xn = (int) sqrttable[x >> 12] << 2;
+					xn = (int32_t) sqrttable[x >> 12] << 2;
 				}
 				else
 				{
 					// 0x00010000 <= x < 0x00040000
-					xn = (int) sqrttable[x >> 10] << 1;
+					xn = (int32_t) sqrttable[x >> 10] << 1;
 				}
 			}
 
@@ -133,12 +136,12 @@ int32_t tmc_sqrti(int32_t x)
 			if (x >= 0x4000)
 			{
 				// 0x4000 <= x < 0x00010000
-				xn = (int) (sqrttable[x >> 8] ) + 1;
+				xn = (int32_t) (sqrttable[x >> 8] ) + 1;
 			}
 			else
 			{
 				// 0x1000 <= x < 0x4000
-				xn = (int) (sqrttable[x >> 6] >> 1) + 1;
+				xn = (int32_t) (sqrttable[x >> 6] >> 1) + 1;
 			}
 		}
 		else
@@ -146,12 +149,12 @@ int32_t tmc_sqrti(int32_t x)
 			if (x >= 0x0400)
 			{
 				// 0x0400 <= x < 0x1000
-				xn = (int) (sqrttable[x >> 4] >> 2) + 1;
+				xn = (int32_t) (sqrttable[x >> 4] >> 2) + 1;
 			}
 			else
 			{
 				// 0x0100 <= x < 0x0400
-				xn = (int) (sqrttable[x >> 2] >> 3) + 1;
+				xn = (int32_t) (sqrttable[x >> 2] >> 3) + 1;
 			}
 		}
 	}

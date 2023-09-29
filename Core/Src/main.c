@@ -31,7 +31,7 @@
 #include "tmcl/TMCL.h"
 #include "tmcl/BoardAssignment.h"
 #include "usbd_cdc_if.h"
-
+#include "tmcl/RAMDebug.h"
 #include "ESC.h"
 /* USER CODE END Includes */
 
@@ -89,7 +89,7 @@ int tmcl_transmitt(uint8_t* Buf, int Len)
 	return CDC_Transmit_FS(Buf, Len);
 }
 #define MODULE_ID "0011"
-const char *VersionString = MODULE_ID"V307"; // module id and version of the firmware shown in the TMCL-IDE
+const char *VersionString = MODULE_ID"V309"; // module id and version of the firmware shown in the TMCL-IDE
 
 /* USER CODE END 0 */
 
@@ -155,7 +155,7 @@ int main(void)
 	ids.ch1.id = ID_TMC4671;
 	ids.ch1.state = ID_STATE_DONE;
 
-	ids.ch2.id = ID_TMC6100;
+	ids.ch2.id = ID_TMC6100_BOB;
 	ids.ch2.state = ID_STATE_DONE;
 	tmcl_boot();
 
@@ -165,11 +165,14 @@ int main(void)
 
   while (1)
   {
+	  // handle RAMDebug
+	debug_process();
+
 	  // Perodic jobs of Motion controller/Driver boards
 	Evalboards.ch1.periodicJob(uwTick);
 	Evalboards.ch2.periodicJob(uwTick);
 
-	// Process TMCL communication
+//	 Process TMCL communication
 	tmcl_process();
 
 

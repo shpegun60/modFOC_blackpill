@@ -1,3 +1,12 @@
+/*******************************************************************************
+* Copyright © 2019 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
+
+
 #include "TMCMotionController.h"
 
 EvalBoardMotionControllerTypeDef TMCMotionController =
@@ -16,11 +25,12 @@ void tmcmotioncontroller_init()
 	Evalboards.ch1.config->state        = CONFIG_READY;
 	Evalboards.ch1.config->configIndex  = 0;
 
-	// Set the minimum required voltage to 0.1V here.
 	// A value of 0 indicates the Evalboard not connecting the VM line,
 	// resulting in skipped global minimum voltage checks.
-	Evalboards.ch1.VMMin                = 1;
-	Evalboards.ch1.VMMax                = -1;
+	// A negative value indicates no board being connected, which skips the
+	// minimum voltage check for that channel
+	Evalboards.ch1.VMMin                = -1;
+	Evalboards.ch1.VMMax                = s32_MAX;
 
 	Evalboards.ch1.numberOfMotors       = 0;
 	Evalboards.ch1.errors               = 0;

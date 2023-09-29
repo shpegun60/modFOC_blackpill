@@ -1,9 +1,12 @@
+/*******************************************************************************
+* Copyright © 2017 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
+
 /*
- * RegisterAccess.h
- *
- *  Created on: 12.07.2017
- *      Author: LK
- *
  *  The permission system aims to allow a general-purpose implementation for
  *  all common hardware register usages. This includes:
  *  - Trivial Cases: Read, Write, Read & Write
@@ -52,6 +55,7 @@
 #define TMC_IS_READABLE(x)    ((x) & TMC_ACCESS_READ)
 #define TMC_IS_WRITABLE(x)    ((x) & TMC_ACCESS_WRITE)
 #define TMC_IS_DIRTY(x)       ((x) & TMC_ACCESS_DIRTY)
+#define TMC_IS_PRESET(x)      ((x) & TMC_ACCESS_HW_PRESET)
 #define TMC_IS_RESETTABLE(x)  (((x) & (TMC_ACCESS_W_PRESET)) == TMC_ACCESS_WRITE) // Write bit set, Hardware preset bit not set
 #define TMC_IS_RESTORABLE(x)  (((x) & TMC_ACCESS_WRITE) && (!(x & TMC_ACCESS_HW_PRESET) || (x & TMC_ACCESS_DIRTY))) // Write bit set, if it's a hardware preset register, it needs to be dirty
 
@@ -60,7 +64,7 @@
 typedef struct
 {
 	uint8_t address;
-	int32_t value;
+	uint32_t value;
 } TMCRegisterConstant;
 
 // Helper define:

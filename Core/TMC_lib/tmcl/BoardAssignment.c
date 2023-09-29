@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright © 2019 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
+
 #include "TMCL.h"
 #include "IdDetection.h"
 #include "BoardAssignment.h"
@@ -12,31 +20,48 @@ int32_t Board_assign(IdAssignmentTypeDef *ids)
 {
 	int32_t out = 0;
 
+	// Test mode // todo REM 2: still needed? (LH)
+	if((ids->ch1.id == 0xFF) || (ids->ch2.id == 0xFF))
+	{
+		if((Evalboards.ch1.id != 0) || (Evalboards.ch2.id != 0) || (ids->ch1.id != ids->ch2.id))
+		{
+			ids->ch1.state = ID_STATE_NOT_IN_FW;
+			ids->ch2.state = ID_STATE_NOT_IN_FW;
+			out |= ids->ch2.state  << 24;
+			out |= ids->ch2.id     << 16;
+			out |= ids->ch1.state  << 8;
+			out |= ids->ch1.id     << 0;
+			return out;
+		}
+	}
+
 	// Assign motion controller
-	if((Evalboards.ch1.id == ids->ch1.id) && (ids->ch1.id != 0)) {
-		// todo CHECK 2: Evalboards.ch_.id only gets written at the end of this function - so the only way we can reach this case by calling this function multiple times.
+	if((Evalboards.ch1.id == ids->ch1.id) && (ids->ch1.id != 0))
+	{	// todo CHECK 2: Evalboards.ch_.id only gets written at the end of this function - so the only way we can reach this case by calling this function multiple times.
 		//               Therefor, the else case always runs before, which means any information returned by the justCheck = true call here would have already been
 		//               given by the previous call of this function. This entire ID detection procedure is kinda messy, maybe we can actually completely rework it (LH)
 		ids->ch1.state = assignCh1(ids->ch1.id, true);
-	} else {
+	}
+	else
+	{
 		Evalboards.ch1.deInit(); // todo REM 2: Hot-Unplugging is not maintained currently, should probably be removed (LH) #1
-		if(ids->ch1.state == ID_STATE_DONE) {
+		if(ids->ch1.state == ID_STATE_DONE)
 			ids->ch1.state = assignCh1(ids->ch1.id, false);
-		}
 		Evalboards.ch1.config->reset();
 	}
 
 	// Assign driver
-	if((Evalboards.ch2.id == ids->ch2.id) && (ids->ch2.id != 0)) {
+	if((Evalboards.ch2.id == ids->ch2.id) && (ids->ch2.id != 0))
+	{
 		ids->ch2.state = assignCh2(ids->ch2.id, true);
-	} else {
+	}
+	else
+	{
 		Evalboards.ch2.deInit(); // todo REM 2: Hot-Unplugging is not maintained currently, should probably be removed (LH) #2
-		if(ids->ch2.state == ID_STATE_DONE) {
+		if(ids->ch2.state == ID_STATE_DONE)
 			ids->ch2.state = assignCh2(ids->ch2.id, false);
-		}
 		Evalboards.ch2.config->reset();
 	}
-
 
 	Evalboards.ch1.id = ids->ch1.id;
 	Evalboards.ch2.id = ids->ch2.id;
@@ -91,11 +116,6 @@ static uint8_t assignCh2(uint8_t id, uint8_t justCheck)
 //	if(!justCheck)
 //		tmcdriver_init();
 
-#if defined(Startrampe)
-	if(id == ID_TMC2208 && EEPROM.ch2.hw == 0x0103)
-		return ok;
-#endif
-
 	for(size_t i = 0, sz = ARRAY_SIZE(init_ch2); i < sz; i++)
 	{
 		if(init_ch2[i].id == id)
@@ -115,7 +135,7 @@ static void unassign(IdAssignmentTypeDef *ids)
 	UNUSED(ids);
 }
 
-void periodicJob(unsigned int tick)
+void periodicJob(uint32_t tick)
 {
 	UNUSED(tick);
 }

@@ -1,7 +1,17 @@
+/*******************************************************************************
+* Copyright © 2019 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
+
+
 #include "Board.h"
 
 EvalboardsTypeDef Evalboards;
-
+MotionControllerBoards motionControllerBoards;
+DriverBoards driverBoards;
 
 static void deInit(void) {}
 
@@ -64,6 +74,45 @@ static uint32_t dummy_getLimit(uint8_t type, uint8_t motor, int32_t *value)
 	return TMC_ERROR_FUNCTION;
 }
 
+static uint8_t dummy_onPinChange(IOPinTypeDef *pin, IO_States state)
+{
+	UNUSED(pin);
+	UNUSED(state);
+	return 1;
+}
+
+static void dummy_OTP_init(void)
+{
+	return;
+}
+
+static void dummy_OTP_address(uint32_t address)
+{
+	UNUSED(address);
+	return;
+}
+
+static void dummy_OTP_value(uint32_t value)
+{
+	UNUSED(value);
+	return;
+}
+
+static void dummy_OTP_program(void)
+{
+	return;
+}
+
+static void dummy_OTP_lock(void)
+{
+	return;
+}
+
+static OTP_Status dummy_OTP_status(void)
+{
+	return OTP_STATUS_IDLE;
+}
+
 static uint8_t delegationReturn(void)
 {
 	return 1;
@@ -96,6 +145,8 @@ void board_setDummyFunctions(EvalboardFunctionsTypeDef *channel)
 	channel->readRegister      = dummy_AddressRef;
 	channel->writeRegister     = dummy_AddressValue;
 	channel->SAP               = dummy_TypeMotorValue;
+	channel->SIO               = dummy_TypeMotorValue;
+	channel->GIO               = dummy_TypeMotorRef;
 	channel->STAP              = dummy_TypeMotorValue;
 	channel->RSAP              = dummy_TypeMotorValue;
 	channel->userFunction      = dummy_TypeMotorRef;
@@ -106,6 +157,14 @@ void board_setDummyFunctions(EvalboardFunctionsTypeDef *channel)
 	channel->fullCover         = NULL;
 	channel->getMin            = dummy_getLimit;
 	channel->getMax            = dummy_getLimit;
+	channel->onPinChange       = dummy_onPinChange;
+
+	channel->OTP_init          = dummy_OTP_init;
+	channel->OTP_address       = dummy_OTP_address;
+	channel->OTP_value         = dummy_OTP_value;
+	channel->OTP_program       = dummy_OTP_program;
+	channel->OTP_status        = dummy_OTP_status;
+	channel->OTP_lock          = dummy_OTP_lock;
 }
 
 void periodicJobDummy(uint32_t tick)

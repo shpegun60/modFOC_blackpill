@@ -1,9 +1,11 @@
-/*
- * LinearRamp1.h
- *
- *  Created on: 09.11.2018
- *      Author: LK
- */
+/*******************************************************************************
+* Copyright © 2018 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
+
 
 #ifndef TMC_RAMP_LINEARRAMP1_H_
 #define TMC_RAMP_LINEARRAMP1_H_
@@ -14,7 +16,7 @@
 // Default precision of the calculations. Internal calculations use a precision
 // of 1/TMC_RAMP_LINEAR_PRECISION for acceleration and velocity.
 // When using 2**N as precision, this results in N digits of precision.
-#define TMC_RAMP_LINEAR_DEFAULT_PRECISION (1<<17)
+#define TMC_RAMP_LINEAR_DEFAULT_PRECISION ((uint32_t)1<<17)
 
 // Position mode: When hitting the target position a velocity below the V_STOP threshold will be cut off to velocity 0
 #define TMC_RAMP_LINEAR_DEFAULT_HOMING_DISTANCE 5

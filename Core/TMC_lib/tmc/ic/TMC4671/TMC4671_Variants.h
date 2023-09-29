@@ -1,10 +1,14 @@
-/*
- *  TMC4671_Variants.h
- *  Author: ED
- */
+/*******************************************************************************
+* Copyright © 2019 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
 
-#ifndef TMC4671_VARIANTS_H
-#define TMC4671_VARIANTS_H
+
+#ifndef TMC4671_VARIANTS_H_
+#define TMC4671_VARIANTS_H_
 
 #define CHIPINFO_ADDR_SI_TYPE                                   0
 #define CHIPINFO_ADDR_SI_VERSION                                1
@@ -123,4 +127,4 @@
 #define INTERIM_ADDR_STATUS_PARAM_10                            214
 #define INTERIM_ADDR_STATUS_PARAM_32                            215
 
-#endif
+#endif /* TMC4671_VARIANTS_H_ */

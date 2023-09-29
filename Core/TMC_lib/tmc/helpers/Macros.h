@@ -1,9 +1,11 @@
-/*
- * Macros.h
- *
- *  Created on: 04.01.2018
- *      Author: LH
- */
+/*******************************************************************************
+* Copyright © 2018 TRINAMIC Motion Control GmbH & Co. KG
+* (now owned by Analog Devices Inc.),
+*
+* Copyright © 2023 Analog Devices Inc. All Rights Reserved. This software is
+* proprietary & confidential to Analog Devices, Inc. and its licensors.
+*******************************************************************************/
+
 
 #ifndef TMC_MACROS_H_
 #define TMC_MACROS_H_
@@ -13,7 +15,7 @@
  * If it is 1, the value is negative and the Bits 32 to n+1 are set to 1
  * If it is 0, the value remains unchanged
  */
-#define CAST_Sn_TO_S32(value, n) ((value) | (((value) & (1<<((n)-1)))? ~((0x1<<(n))-1) : 0 ))
+#define CAST_Sn_TO_S32(value, n) ((value) | (((value) & ((uint32_t)1<<((n)-1)))? ~(((uint32_t)1<<(n))-1) : 0 ))
 
 // Min/Max macros
 #ifndef MIN
@@ -24,7 +26,9 @@
 #endif
 
 // Static Array length
+#ifndef ARRAY_SIZE
 #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
+#endif
 
 // Generic mask/shift macros
 #define FIELD_GET(data, mask, shift) \
