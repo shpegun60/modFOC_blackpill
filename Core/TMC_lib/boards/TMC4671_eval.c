@@ -12,6 +12,7 @@
 #include "tmc/ic/TMC4671/TMC4671.h"
 #include "tmc/ramp/LinearRamp.h"
 #include "tmcl/RAMDebug.h"
+#include "tmcl_debug_timer.h"
 
 #define DEFAULT_MOTOR  0
 #define TMC4671_MOTORS 1
@@ -849,7 +850,7 @@ static void periodicJob(uint32_t actualSystick)
 	}
 }
 
-void timer_overflow(void)
+static void timer_overflow(void)
 {
 	// RAMDebug
 	debug_nextProcess();
@@ -1024,5 +1025,8 @@ void TMC4671_init(void)
 //	Timer.setFrequency(TIMER_CHANNEL_2, 10000);
 	//debug_updateFrequency(10000);
 
-	debug_updateFrequency(1000);
+	setOverflowCallback(timer_overflow);
+	setDebugFrequency(10000);
+	debug_updateFrequency(10000);
+	debugTimerStart();
 }

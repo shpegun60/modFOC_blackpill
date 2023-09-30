@@ -51,6 +51,7 @@ RM := rm -rf
 -include Core/TMC_lib/tmc/ic/MAX22216/subdir.mk
 -include Core/TMC_lib/tmc/helpers/subdir.mk
 -include Core/TMC_lib/boards/subdir.mk
+-include Core/TMC_lib/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk

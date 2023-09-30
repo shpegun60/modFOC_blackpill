@@ -20,6 +20,7 @@
 #include "main.h"
 #include "dma.h"
 #include "spi.h"
+#include "tim.h"
 #include "usb_device.h"
 #include "gpio.h"
 
@@ -91,6 +92,7 @@ int tmcl_transmitt(uint8_t* Buf, int Len)
 #define MODULE_ID "0011"
 const char *VersionString = MODULE_ID"V309"; // module id and version of the firmware shown in the TMCL-IDE
 
+
 /* USER CODE END 0 */
 
 /**
@@ -124,6 +126,7 @@ int main(void)
   MX_DMA_Init();
   MX_SPI1_Init();
   MX_USB_DEVICE_Init();
+  MX_TIM10_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -162,7 +165,6 @@ int main(void)
 	Board_assign(&ids);             // assign boards with detected id
 
 	StartupConfig();
-
   while (1)
   {
 	  // handle RAMDebug

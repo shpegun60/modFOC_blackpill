@@ -71,6 +71,7 @@ Core/TMC_lib/tmc/ic/TMC8461 \
 Core/TMC_lib/tmc/ic/TMC8462 \
 Core/TMC_lib/tmc/ramp \
 Core/TMC_lib/tmcl \
+Core/TMC_lib \
 Drivers/STM32F4xx_HAL_Driver/Src \
 Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src \

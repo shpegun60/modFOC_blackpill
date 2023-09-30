@@ -13,6 +13,7 @@
 #include "BoardAssignment.h"
 #include "IdDetection.h"
 #include "RAMDebug.h"
+#include "tmcl_debug_timer.h"
 #include "main.h"
 
 #define BUILD_VERSION 0
@@ -967,7 +968,10 @@ static void handleRamDebug(void)
 //			Timer.setFrequency(TIMER_CHANNEL_2, ActualCommand.Value.UInt32);
 //			ActualReply.Value.UInt32 = Timer.getPeriod(TIMER_CHANNEL_2);
 //		}
-		ActualReply.Value.UInt32 = 1000;
+		if(debugTimerIsInitialized()) {
+			setDebugFrequency(ActualCommand.Value.UInt32);
+		}
+		ActualReply.Value.UInt32 = getDebugPeriod();
 		break;
 	case 16:
 		if (!debug_setType(ActualCommand.Value.UInt32))
